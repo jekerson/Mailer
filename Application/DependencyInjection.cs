@@ -1,9 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Validators.General;
+using Application.Validators.Registration;
+using Application.Validators.SignIn;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
 {
@@ -14,7 +12,9 @@ namespace Application
             var assembly = typeof(DependencyInjection).Assembly;
 
             //Validators
-
+            services.AddScoped<IGeneralInputValidator, GeneralInputValidator>();
+            services.AddScoped<ISignUpValidator, SignUpValidator>();
+            services.AddScoped<ISignInValidator, SignInValidator>();
 
             // Services
 
