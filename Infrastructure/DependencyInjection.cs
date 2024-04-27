@@ -1,6 +1,16 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Interfaces.Companies;
+using Domain.Interfaces.Files;
+using Domain.Interfaces.Reviews;
+using Domain.Interfaces.Roles;
+using Domain.Interfaces.Sendings;
+using Domain.Interfaces.Users;
 using Infrastructure.Data;
-using Infrastructure.Repositories;
+using Infrastructure.Repositories.Companies;
+using Infrastructure.Repositories.Files;
+using Infrastructure.Repositories.Reviews;
+using Infrastructure.Repositories.Roles;
+using Infrastructure.Repositories.Sendings;
+using Infrastructure.Repositories.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +44,7 @@ namespace Infrastructure
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IUserSendingRepository, UserSendingRepository>();
+            services.AddScoped<IImageStorageRepository, ImageStorageRepository>();
 
             return services;
         }

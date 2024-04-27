@@ -1,4 +1,5 @@
-﻿using Application.Validators.General;
+﻿using Application.UseCases.SignUp;
+using Application.Validators.General;
 using Application.Validators.Registration;
 using Application.Validators.SignIn;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,7 @@ namespace Application
             services.AddScoped<ISignInValidator, SignInValidator>();
 
             // Services
+            services.AddScoped<ISignUpService, SignUpService>();
 
             services.AddAutoMapper(assembly);
 
