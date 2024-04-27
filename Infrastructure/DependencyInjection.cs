@@ -1,9 +1,11 @@
-﻿using Domain.Interfaces.Companies;
+﻿using Application.Abstraction.Messaging;
+using Domain.Interfaces.Companies;
 using Domain.Interfaces.Files;
 using Domain.Interfaces.Reviews;
 using Domain.Interfaces.Roles;
 using Domain.Interfaces.Sendings;
 using Domain.Interfaces.Users;
+using Infrastructure.Authentication;
 using Infrastructure.Data;
 using Infrastructure.Repositories.Companies;
 using Infrastructure.Repositories.Files;
@@ -45,6 +47,7 @@ namespace Infrastructure
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IUserSendingRepository, UserSendingRepository>();
             services.AddScoped<IImageStorageRepository, ImageStorageRepository>();
+            services.AddScoped<IJwtProvider, JwtProvider>();
 
             return services;
         }

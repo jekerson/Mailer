@@ -4,7 +4,7 @@ public partial class CompanyRefreshToken
 {
     public int Id { get; set; }
 
-    public int? CompanyId { get; set; }
+    public int CompanyId { get; set; }
 
     public string Token { get; set; } = null!;
 

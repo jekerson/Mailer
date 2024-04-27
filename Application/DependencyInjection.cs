@@ -1,4 +1,6 @@
-﻿using Application.UseCases.SignUp;
+﻿using Application.UseCases.RefreshToken;
+using Application.UseCases.SignIn;
+using Application.UseCases.SignUp;
 using Application.Validators.General;
 using Application.Validators.Registration;
 using Application.Validators.SignIn;
@@ -19,6 +21,8 @@ namespace Application
 
             // Services
             services.AddScoped<ISignUpService, SignUpService>();
+            services.AddScoped<ITokenRefreshService, TokenRefreshService>();
+            services.AddScoped<ISignInService, SignInService>();
 
             services.AddAutoMapper(assembly);
 
