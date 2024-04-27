@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
@@ -291,7 +289,7 @@ public partial class SenderDbContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("name");
             entity.Property(e => e.SendingId).HasColumnName("sending_id");
-            entity.Property(e => e.SengingDate).HasColumnName("senging_date");
+            entity.Property(e => e.SendingDate).HasColumnName("senging_date");
 
             entity.HasOne(d => d.Sending).WithMany(p => p.SendingContents)
                 .HasForeignKey(d => d.SendingId)

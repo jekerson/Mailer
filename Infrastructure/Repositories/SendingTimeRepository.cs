@@ -5,9 +5,6 @@ using Domain.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class SendingTimeRepository : ISendingTimeRepository
 {
