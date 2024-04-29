@@ -78,8 +78,8 @@ namespace Application.UseCases.Companies
                 return emailValidationResult;
             }
 
-            var companyResult = await _companyRepository.GetCompanyByEmailAsync(generalChangeEmailDto.NewEmail);
-            if (companyResult.IsSuccess)
+            var companyResult = await _companyRepository.GetCompanyByEmailAsync(generalChangeEmailDto.OldEmail);
+            if (companyResult.IsFailure)
             {
                 return companyResult;
             }

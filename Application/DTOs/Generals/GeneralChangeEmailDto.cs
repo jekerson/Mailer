@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs.Generals
 {
-    public record GeneralChangeEmailDto(string NewEmail, string Password);
+    public record GeneralChangeEmailDto(string OldEmail, string NewEmail, string Password);
 }
