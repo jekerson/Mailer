@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Generals;
 using Application.Validators.General;
 using Domain.Abstraction;
 

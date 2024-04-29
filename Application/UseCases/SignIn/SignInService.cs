@@ -1,6 +1,6 @@
 ﻿using Application.Abstraction.Messaging;
-using Application.DTOs;
 using Application.DTOs.Companies;
+using Application.DTOs.Generals;
 using Application.DTOs.Users;
 using Application.Validators.SignIn;
 using Domain.Abstraction;

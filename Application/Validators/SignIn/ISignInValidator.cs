@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.DTOs.Generals;
 using Domain.Abstraction;
 
 namespace Application.Validators.SignIn
