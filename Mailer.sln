@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{A8CA289F-E475-4203-913C-4C23A25E545A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{A8CA289F-E475-4203-913C-4C23A25E545A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{E05BF30B-FDFD-4FD0-B893-707D1544CA0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{E05BF30B-FDFD-4FD0-B893-707D1544CA0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B8E02484-8EC4-48D4-BB4D-3BF1FE4ED149}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{B8E02484-8EC4-48D4-BB4D-3BF1FE4ED149}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{88E07FF6-1D27-4793-8ED3-674419E8736A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{88E07FF6-1D27-4793-8ED3-674419E8736A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{C0E1658C-0B6A-4EC4-BA7C-4A9EC0297440}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 	EndProjectSection
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{AD4A52AC-8463-46E2-850E-275B21B30EF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{1FD0C051-CF01-4815-AD91-EA1338BF4B52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A8CA289F-E475-4203-913C-4C23A25E545A} = {1FD0C051-CF01-4815-AD91-EA1338BF4B52}
+		{E05BF30B-FDFD-4FD0-B893-707D1544CA0D} = {1FD0C051-CF01-4815-AD91-EA1338BF4B52}
+		{B8E02484-8EC4-48D4-BB4D-3BF1FE4ED149} = {1FD0C051-CF01-4815-AD91-EA1338BF4B52}
+		{88E07FF6-1D27-4793-8ED3-674419E8736A} = {1FD0C051-CF01-4815-AD91-EA1338BF4B52}
+		{AD4A52AC-8463-46E2-850E-275B21B30EF9} = {1FD0C051-CF01-4815-AD91-EA1338BF4B52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C5B9592F-D424-4FB8-A38F-D86F640CACC3}

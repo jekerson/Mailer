@@ -1,6 +1,6 @@
 ﻿using Domain.Abstraction;
 
-namespace Application.Validators.Registration
+namespace Application.Validators.SignUp
 {
     public static class SignUpValidationErrors
     {

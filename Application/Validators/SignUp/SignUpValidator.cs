@@ -3,7 +3,7 @@ using Application.DTOs.Users;
 using Application.Validators.General;
 using Domain.Abstraction;
 
-namespace Application.Validators.Registration
+namespace Application.Validators.SignUp
 {
     public class SignUpValidator : ISignUpValidator
     {
@@ -37,37 +37,37 @@ namespace Application.Validators.Registration
             return Result.Success();
         }
 
-        public async Task<Result> ValidateCompanyAsync(CompanySignUpDto companySignUpDto)
+        public async Task<Result> ValidateCompanyAsync(CompanyProfileDto companyProfileDto)
         {
-            var nameResult = await _generalInputValidator.ValidateNameAsync(companySignUpDto.Name);
+            var nameResult = await _generalInputValidator.ValidateNameAsync(companyProfileDto.Name);
             if (nameResult.IsFailure)
             {
                 return nameResult;
             }
 
-            var emailResult = await _generalInputValidator.ValidateEmailAsync(companySignUpDto.Email);
+            var emailResult = await _generalInputValidator.ValidateEmailAsync(companyProfileDto.Email);
             if (emailResult.IsFailure)
             {
                 return emailResult;
             }
 
-            var passwordResult = await _generalInputValidator.ValidatePasswordAsync(companySignUpDto.Password);
+            var passwordResult = await _generalInputValidator.ValidatePasswordAsync(companyProfileDto.Password);
             if (passwordResult.IsFailure)
             {
                 return passwordResult;
             }
 
-            if (string.IsNullOrWhiteSpace(companySignUpDto.Description))
+            if (string.IsNullOrWhiteSpace(companyProfileDto.Description))
             {
                 return Result.Failure(SignUpValidationErrors.CompanyDescriptionRequired);
             }
 
-            if (companySignUpDto.Description.Length > 512)
+            if (companyProfileDto.Description.Length > 512)
             {
                 return Result.Failure(SignUpValidationErrors.CompanyDescriptionTooLong);
             }
 
-            if (companySignUpDto.Logo == null)
+            if (companyProfileDto.Logo == null)
             {
                 return Result.Failure(SignUpValidationErrors.CompanyLogoRequired);
             }

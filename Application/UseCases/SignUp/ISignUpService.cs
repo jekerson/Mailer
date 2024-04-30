@@ -8,6 +8,6 @@ namespace Application.UseCases.SignUp
     {
         Task<Result> UserSignUpAsync(UserSignUpDto userSignUpDto);
 
-        Task<Result> CompanySignUpAsync(CompanySignUpDto companySignUpDto);
+        Task<Result> CompanySignUpAsync(CompanyProfileDto companyProfileDto);
     }
 }

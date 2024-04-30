@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.Companies;
 using Application.DTOs.Users;
-using Application.Validators.Registration;
+using Application.Validators.SignUp;
 using AutoMapper;
 using Domain.Abstraction;
 using Domain.Entities;
@@ -45,17 +45,17 @@ namespace Application.UseCases.SignUp
             return result;
         }
 
-        public async Task<Result> CompanySignUpAsync(CompanySignUpDto companySignUpDto)
+        public async Task<Result> CompanySignUpAsync(CompanyProfileDto companyProfileDto)
         {
-            var validationResult = await _signUpValidator.ValidateCompanyAsync(companySignUpDto);
+            var validationResult = await _signUpValidator.ValidateCompanyAsync(companyProfileDto);
             if (validationResult.IsFailure)
             {
                 return validationResult;
             }
 
-            var company = _mapper.Map<Company>(companySignUpDto);
+            var company = _mapper.Map<Company>(companyProfileDto);
             company.Salt = PasswordUtils.GenerateSalt(PasswordUtils.SALT_LENGTH);
-            company.HashedPassword = PasswordUtils.HashPassword(companySignUpDto.Password, company.Salt);
+            company.HashedPassword = PasswordUtils.HashPassword(companyProfileDto.Password, company.Salt);
             company.CreatedAt = DateTime.Now;
             company.ImagePath = string.Empty;
 
@@ -65,7 +65,7 @@ namespace Application.UseCases.SignUp
                 return addCompanyResult;
             }
 
-            var logoSaveResult = await _imageStorageRepository.SaveCompanyLogoAsync(companySignUpDto.Logo, company.Id);
+            var logoSaveResult = await _imageStorageRepository.SaveCompanyLogoAsync(companyProfileDto.Logo, company.Id);
             if (logoSaveResult.IsFailure)
             {
                 await _companyRepository.DeleteCompanyAsync(company.Id);
