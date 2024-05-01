@@ -1,14 +1,9 @@
 ﻿using Application.DTOs.Generals;
 using Domain.Abstraction;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.UseCases.Users
+namespace Application.UseCases.Users.Profile
 {
-    public interface IUserService
+    public interface IUserProfileUseCase
     {
         Task<Result> ResetUserPassword(GeneralResetPasswordDto generalResetPasswordDto);
 

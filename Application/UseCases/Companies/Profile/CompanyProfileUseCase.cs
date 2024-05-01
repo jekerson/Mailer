@@ -5,22 +5,17 @@ using Domain.Abstraction;
 using Domain.Helpers;
 using Domain.Interfaces.Companies;
 using Domain.Interfaces.Files;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.UseCases.Companies
+namespace Application.UseCases.Companies.Profile
 {
-    public class CompanyService : ICompanyService
+    public class CompanyProfileUseCase : ICompanyProfileUseCase
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly ICompanyRecoveryTokenRepository _companyRecoveryTokenRepository;
         private readonly IImageStorageRepository _imageStorageRepository;
         private readonly IGeneralInputValidator _generalInputValidator;
 
-        public CompanyService(
+        public CompanyProfileUseCase(
             ICompanyRepository companyRepository,
             ICompanyRecoveryTokenRepository companyRecoveryTokenRepository,
             IImageStorageRepository imageStorageRepository,
@@ -61,7 +56,7 @@ namespace Application.UseCases.Companies
             var company = companyResult.Value;
             if (!PasswordUtils.VerifyPassword(generalResetPasswordDto.Password, company.HashedPassword, company.Salt))
             {
-                return Result.Failure(CompanyServiceErrors.InvalidPassword);
+                return Result.Failure(CompanyProfileUseCaseErrors.InvalidPassword);
             }
 
             company.Salt = PasswordUtils.GenerateSalt(PasswordUtils.SALT_LENGTH);
@@ -87,7 +82,7 @@ namespace Application.UseCases.Companies
             var company = companyResult.Value;
             if (!PasswordUtils.VerifyPassword(generalChangeEmailDto.Password, company.HashedPassword, company.Salt))
             {
-                return Result.Failure(CompanyServiceErrors.InvalidPassword);
+                return Result.Failure(CompanyProfileUseCaseErrors.InvalidPassword);
             }
 
             company.Email = generalChangeEmailDto.NewEmail;
@@ -106,39 +101,39 @@ namespace Application.UseCases.Companies
             var company = companyResult.Value;
             if (!PasswordUtils.VerifyPassword(password, company.HashedPassword, company.Salt))
             {
-                return Result.Failure(CompanyServiceErrors.InvalidPassword);
+                return Result.Failure(CompanyProfileUseCaseErrors.InvalidPassword);
             }
 
             return await _companyRepository.DeleteCompanyAsync(company.Id);
         }
 
-        public async Task<Result> UpdateCompanyData(CompanyUpdateDataDto companyUpdateDataDto)
+        public async Task<Result> UpdateCompanyData(CompanyProfileDto companyProfileDto)
         {
-            var emailValidationResult = await _generalInputValidator.ValidateEmailAsync(companyUpdateDataDto.Email);
+            var emailValidationResult = await _generalInputValidator.ValidateEmailAsync(companyProfileDto.Email);
             if (emailValidationResult.IsFailure)
             {
                 return emailValidationResult;
             }
 
-            var nameValidationResult = await _generalInputValidator.ValidateNameAsync(companyUpdateDataDto.Name);
+            var nameValidationResult = await _generalInputValidator.ValidateNameAsync(companyProfileDto.Name);
             if (nameValidationResult.IsFailure)
             {
                 return nameValidationResult;
             }
 
-            var companyResult = await _companyRepository.GetCompanyByEmailAsync(companyUpdateDataDto.Email);
+            var companyResult = await _companyRepository.GetCompanyByEmailAsync(companyProfileDto.Email);
             if (companyResult.IsFailure)
             {
                 return companyResult;
             }
 
             var company = companyResult.Value;
-            company.Name = companyUpdateDataDto.Name;
-            company.Description = companyUpdateDataDto.Description;
+            company.Name = companyProfileDto.Name;
+            company.Description = companyProfileDto.Description;
 
-            if (companyUpdateDataDto.Logo != null)
+            if (companyProfileDto.Logo != null)
             {
-                var logoSaveResult = await _imageStorageRepository.SaveCompanyLogoAsync(companyUpdateDataDto.Logo, company.Id);
+                var logoSaveResult = await _imageStorageRepository.SaveCompanyLogoAsync(companyProfileDto.Logo, company.Id);
                 if (logoSaveResult.IsFailure)
                 {
                     return Result.Failure(logoSaveResult.Error);

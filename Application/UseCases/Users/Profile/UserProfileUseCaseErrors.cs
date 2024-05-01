@@ -1,13 +1,8 @@
 ﻿using Domain.Abstraction;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.UseCases.Users
+namespace Application.UseCases.Users.Profile
 {
-    public static class UserServiceErrors
+    public static class UserProfileUseCaseErrors
     {
         public static Error InvalidPassword => Error.Validation(
             "Company.InvalidPassword",

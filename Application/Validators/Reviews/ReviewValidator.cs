@@ -1,16 +1,9 @@
 ﻿using Application.DTOs.Reviews;
 using Domain.Abstraction;
-using Domain.Interfaces.Sendings;
-using Domain.Interfaces.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Validators.Reviews
 {
-    public class ReviewValidator: IReviewValidator
+    public class ReviewValidator : IReviewValidator
     {
         public async Task<Result> ValidateAsync(CreateReviewDto createReviewDto)
         {

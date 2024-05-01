@@ -3,20 +3,15 @@ using Application.Validators.General;
 using Domain.Abstraction;
 using Domain.Helpers;
 using Domain.Interfaces.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.UseCases.Users
+namespace Application.UseCases.Users.Profile
 {
-    public class UserService : IUserService
+    public class UserProfileUseCase : IUserProfileUseCase
     {
         private readonly IUserRepository _userRepository;
         private readonly IGeneralInputValidator _generalInputValidator;
 
-        public UserService(IUserRepository userRepository, IGeneralInputValidator generalInputValidator)
+        public UserProfileUseCase(IUserRepository userRepository, IGeneralInputValidator generalInputValidator)
         {
             _userRepository = userRepository;
             _generalInputValidator = generalInputValidator;
@@ -40,11 +35,11 @@ namespace Application.UseCases.Users
 
             if (!PasswordUtils.VerifyPassword(generalChangeEmailDto.Password, user.HashedPassword, user.Salt))
             {
-                return Result.Failure(UserServiceErrors.InvalidPassword);
+                return Result.Failure(UserProfileUseCaseErrors.InvalidPassword);
             }
 
             user.Email = generalChangeEmailDto.NewEmail;
-            
+
             return await _userRepository.UpdateUserAsync(user);
         }
 
@@ -57,9 +52,9 @@ namespace Application.UseCases.Users
             }
             var user = userResult.Value;
 
-            if(!PasswordUtils.VerifyPassword(generalSignInDto.Password, user.HashedPassword, user.Salt))
+            if (!PasswordUtils.VerifyPassword(generalSignInDto.Password, user.HashedPassword, user.Salt))
             {
-                return Result.Failure(UserServiceErrors.InvalidPassword);
+                return Result.Failure(UserProfileUseCaseErrors.InvalidPassword);
             }
 
             return await _userRepository.DeleteUserAsync(user.Id);
@@ -90,9 +85,9 @@ namespace Application.UseCases.Users
             }
             var user = userResult.Value;
 
-            if(!PasswordUtils.VerifyPassword(generalResetPasswordDto.Password, user.HashedPassword, user.Salt))
+            if (!PasswordUtils.VerifyPassword(generalResetPasswordDto.Password, user.HashedPassword, user.Salt))
             {
-                return Result.Failure(UserServiceErrors.InvalidPassword);
+                return Result.Failure(UserProfileUseCaseErrors.InvalidPassword);
             }
 
             user.Salt = PasswordUtils.GenerateSalt(PasswordUtils.SALT_LENGTH);

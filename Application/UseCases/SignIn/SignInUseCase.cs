@@ -1,22 +1,15 @@
 ﻿using Application.Abstraction.Messaging;
-using Application.DTOs.Companies;
 using Application.DTOs.Generals;
-using Application.DTOs.Users;
 using Application.Validators.SignIn;
 using Domain.Abstraction;
 using Domain.Entities;
 using Domain.Helpers;
 using Domain.Interfaces.Companies;
 using Domain.Interfaces.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.SignIn
 {
-    public class SignInService: ISignInService
+    public class SignInUseCase : ISignInUseCase
     {
         private readonly IUserRepository _userRepository;
         private readonly ICompanyRepository _companyRepository;
@@ -25,7 +18,7 @@ namespace Application.UseCases.SignIn
         private readonly IUserRefreshTokenRepository _userRefreshTokenRepository;
         private readonly ICompanyRefreshTokenRepository _companyRefreshTokenRepository;
 
-        public SignInService(
+        public SignInUseCase(
             IUserRepository userRepository,
             ICompanyRepository companyRepository,
             ISignInValidator signInValidator,
@@ -51,7 +44,7 @@ namespace Application.UseCases.SignIn
             var user = (await _userRepository.GetUserByEmailAsync(generalSignInDto.Email)).Value;
             if (!PasswordUtils.VerifyPassword(generalSignInDto.Password, user.HashedPassword, user.Salt))
             {
-                return AuthenticationResult.Failure(SignInErrors.InvalidCredentials);
+                return AuthenticationResult.Failure(SignInUseCaseErrors.InvalidCredentials);
             }
 
             var token = _jwtProvider.GenerateUserToken(user);
@@ -81,7 +74,7 @@ namespace Application.UseCases.SignIn
             var company = (await _companyRepository.GetCompanyByEmailAsync(generalSignInDto.Email)).Value;
             if (!PasswordUtils.VerifyPassword(generalSignInDto.Password, company.HashedPassword, company.Salt))
             {
-                return AuthenticationResult.Failure(SignInErrors.InvalidCredentials);
+                return AuthenticationResult.Failure(SignInUseCaseErrors.InvalidCredentials);
             }
 
             var token = _jwtProvider.GenerateCompanyToken(company);

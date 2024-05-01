@@ -3,15 +3,10 @@ using Application.Validators.SignIn;
 using Domain.Abstraction;
 using Domain.Interfaces.Companies;
 using Domain.Interfaces.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.UseCases.RefreshToken
+namespace Application.Services.RefreshToken
 {
-    public class TokenRefreshService: ITokenRefreshService
+    public class TokenRefreshService : ITokenRefreshService
     {
         private readonly IUserRefreshTokenRepository _userRefreshTokenRepository;
         private readonly ICompanyRefreshTokenRepository _companyRefreshTokenRepository;

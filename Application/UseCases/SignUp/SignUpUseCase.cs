@@ -11,7 +11,7 @@ using Domain.Interfaces.Users;
 
 namespace Application.UseCases.SignUp
 {
-    public class SignUpService : ISignUpService
+    public class SignUpUseCase : ISignUpUseCase
     {
         private readonly IUserRepository _userRepository;
         private readonly ICompanyRepository _companyRepository;
@@ -19,7 +19,7 @@ namespace Application.UseCases.SignUp
         private readonly ISignUpValidator _signUpValidator;
         private readonly IImageStorageRepository _imageStorageRepository;
 
-        public SignUpService(IUserRepository userRepository, ICompanyRepository companyRepository, IMapper mapper, ISignUpValidator signUpValidator, IImageStorageRepository imageStorageRepository)
+        public SignUpUseCase(IUserRepository userRepository, ICompanyRepository companyRepository, IMapper mapper, ISignUpValidator signUpValidator, IImageStorageRepository imageStorageRepository)
         {
             _userRepository = userRepository;
             _companyRepository = companyRepository;

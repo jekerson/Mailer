@@ -1,8 +1,8 @@
-﻿using Application.UseCases.Companies;
-using Application.UseCases.RefreshToken;
+﻿using Application.Services.RefreshToken;
+using Application.UseCases.Companies.Profile;
 using Application.UseCases.SignIn;
 using Application.UseCases.SignUp;
-using Application.UseCases.Users;
+using Application.UseCases.Users.Profile;
 using Application.Validators.General;
 using Application.Validators.Reviews;
 using Application.Validators.Sendings;
@@ -26,11 +26,14 @@ namespace Application
             services.AddScoped<IReviewValidator, ReviewValidator>();
 
             // Services
-            services.AddScoped<ISignUpService, SignUpService>();
+
             services.AddScoped<ITokenRefreshService, TokenRefreshService>();
-            services.AddScoped<ISignInService, SignInService>();
-            services.AddScoped<ICompanyService,  CompanyService>();
-            services.AddScoped<IUserService, UserService>();
+
+            // Use Cases
+            services.AddScoped<ISignUpUseCase, SignUpUseCase>();
+            services.AddScoped<ISignInUseCase, SignInUseCase>();
+            services.AddScoped<ICompanyProfileUseCase, CompanyProfileUseCase>();
+            services.AddScoped<IUserProfileUseCase, UserProfileUseCase>();
 
             services.AddAutoMapper(assembly);
 

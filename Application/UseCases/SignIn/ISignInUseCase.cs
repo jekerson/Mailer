@@ -1,16 +1,9 @@
-﻿using Application.DTOs.Companies;
-using Application.DTOs.Generals;
-using Application.DTOs.Users;
+﻿using Application.DTOs.Generals;
 using Domain.Abstraction;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.SignIn
 {
-    public interface ISignInService
+    public interface ISignInUseCase
     {
         Task<AuthenticationResult> UserSignInAsync(GeneralSignInDto generalSignInDto);
         Task<AuthenticationResult> CompanySignInAsync(GeneralSignInDto generalSignInDto);

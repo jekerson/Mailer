@@ -4,7 +4,7 @@ using Domain.Abstraction;
 
 namespace Application.UseCases.SignUp
 {
-    public interface ISignUpService
+    public interface ISignUpUseCase
     {
         Task<Result> UserSignUpAsync(UserSignUpDto userSignUpDto);
 
