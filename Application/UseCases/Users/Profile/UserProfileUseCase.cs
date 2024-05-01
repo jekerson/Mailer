@@ -35,7 +35,7 @@ namespace Application.UseCases.Users.Profile
 
             if (!PasswordUtils.VerifyPassword(generalChangeEmailDto.Password, user.HashedPassword, user.Salt))
             {
-                return Result.Failure(UserProfileUseCaseErrors.InvalidPassword);
+                return Result.Failure(UserProfileErrors.InvalidPassword);
             }
 
             user.Email = generalChangeEmailDto.NewEmail;
@@ -54,9 +54,9 @@ namespace Application.UseCases.Users.Profile
 
             if (!PasswordUtils.VerifyPassword(generalSignInDto.Password, user.HashedPassword, user.Salt))
             {
-                return Result.Failure(UserProfileUseCaseErrors.InvalidPassword);
+                return Result.Failure(UserProfileErrors.InvalidPassword);
             }
-
+            
             return await _userRepository.DeleteUserAsync(user.Id);
 
         }
@@ -87,7 +87,7 @@ namespace Application.UseCases.Users.Profile
 
             if (!PasswordUtils.VerifyPassword(generalResetPasswordDto.Password, user.HashedPassword, user.Salt))
             {
-                return Result.Failure(UserProfileUseCaseErrors.InvalidPassword);
+                return Result.Failure(UserProfileErrors.InvalidPassword);
             }
 
             user.Salt = PasswordUtils.GenerateSalt(PasswordUtils.SALT_LENGTH);

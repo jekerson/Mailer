@@ -2,10 +2,10 @@
 
 namespace Application.UseCases.Companies.Profile
 {
-    public static class CompanyProfileUseCaseErrors
+    public static class CompanyProfileErrors
     {
         public static Error InvalidPassword => Error.Validation(
-            "Company.InvalidPassword",
+            "CompanyProfile.InvalidPassword",
             "The provided password is invalid.");
     }
 }

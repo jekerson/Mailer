@@ -56,7 +56,7 @@ namespace Application.UseCases.Companies.Profile
             var company = companyResult.Value;
             if (!PasswordUtils.VerifyPassword(generalResetPasswordDto.Password, company.HashedPassword, company.Salt))
             {
-                return Result.Failure(CompanyProfileUseCaseErrors.InvalidPassword);
+                return Result.Failure(CompanyProfileErrors.InvalidPassword);
             }
 
             company.Salt = PasswordUtils.GenerateSalt(PasswordUtils.SALT_LENGTH);
@@ -82,7 +82,7 @@ namespace Application.UseCases.Companies.Profile
             var company = companyResult.Value;
             if (!PasswordUtils.VerifyPassword(generalChangeEmailDto.Password, company.HashedPassword, company.Salt))
             {
-                return Result.Failure(CompanyProfileUseCaseErrors.InvalidPassword);
+                return Result.Failure(CompanyProfileErrors.InvalidPassword);
             }
 
             company.Email = generalChangeEmailDto.NewEmail;
@@ -101,7 +101,7 @@ namespace Application.UseCases.Companies.Profile
             var company = companyResult.Value;
             if (!PasswordUtils.VerifyPassword(password, company.HashedPassword, company.Salt))
             {
-                return Result.Failure(CompanyProfileUseCaseErrors.InvalidPassword);
+                return Result.Failure(CompanyProfileErrors.InvalidPassword);
             }
 
             return await _companyRepository.DeleteCompanyAsync(company.Id);
