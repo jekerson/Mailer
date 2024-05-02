@@ -4,11 +4,6 @@ using Domain.Abstraction;
 using Domain.Entities;
 using Domain.Interfaces.Reviews;
 using Domain.Interfaces.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UseCases.Users.ReviewManagment
 {

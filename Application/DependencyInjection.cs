@@ -1,8 +1,12 @@
 ﻿using Application.Services.RefreshToken;
 using Application.UseCases.Companies.Profile;
+using Application.UseCases.Sendings.Category;
+using Application.UseCases.Sendings.Details;
+using Application.UseCases.Sendings.Sort;
 using Application.UseCases.SignIn;
 using Application.UseCases.SignUp;
 using Application.UseCases.Users.Profile;
+using Application.UseCases.Users.Sendings.Subscriptions;
 using Application.Validators.General;
 using Application.Validators.Reviews;
 using Application.Validators.Sendings;
@@ -34,6 +38,10 @@ namespace Application
             services.AddScoped<ISignInUseCase, SignInUseCase>();
             services.AddScoped<ICompanyProfileUseCase, CompanyProfileUseCase>();
             services.AddScoped<IUserProfileUseCase, UserProfileUseCase>();
+            services.AddScoped<ISendingSubscriptionUseCase, SendingSubscriptionUseCase>();
+            services.AddScoped<ISendingCategoryUseCase, SendingCategoryUseCase>();
+            services.AddScoped<ISendingDetailsUseCase, SendingDetailsUseCase>();
+            services.AddScoped<ISendingSortingUseCase, SendingSortingUseCase>();
 
             services.AddAutoMapper(assembly);
 

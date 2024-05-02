@@ -4,13 +4,13 @@ public partial class Sending
 {
     public int Id { get; set; }
 
-    public int? SendingTypeId { get; set; }
+    public int SendingTypeId { get; set; }
 
-    public int? SendingTimeId { get; set; }
+    public int SendingTimeId { get; set; }
 
-    public int? SendingCategoryId { get; set; }
+    public int SendingCategoryId { get; set; }
 
-    public int? CompanyId { get; set; }
+    public int CompanyId { get; set; }
 
     public string Name { get; set; } = null!;
 

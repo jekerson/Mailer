@@ -56,7 +56,7 @@ namespace Application.UseCases.Users.Profile
             {
                 return Result.Failure(UserProfileErrors.InvalidPassword);
             }
-            
+
             return await _userRepository.DeleteUserAsync(user.Id);
 
         }
