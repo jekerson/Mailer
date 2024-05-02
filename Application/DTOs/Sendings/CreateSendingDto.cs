@@ -6,6 +6,8 @@ namespace Application.DTOs.Sendings
         string Name,
         string Description,
         int CategoryId,
+        int SendingTypeId,
+        int SendingTimeId,
         int CompanyId,
         IFileData Logo);
 }
