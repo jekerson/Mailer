@@ -45,7 +45,12 @@ namespace Infrastructure.Repositories.Sendings
 
         public async Task<Result<IEnumerable<Sending>>> GetSendingsBySendingCategoryIdAsync(int sendingCategoryId)
         {
-            var sendings = await _dbContext.Sendings.Where(s => s.SendingCategoryId == sendingCategoryId).AsNoTracking().ToListAsync();
+            var sendings = await _dbContext.Sendings
+                .Where(s => s.SendingCategoryId == sendingCategoryId)
+                .Include(s => s.SendingScores)
+                .Include(s => s.Company)
+                .AsNoTracking()
+                .ToListAsync();
             return Result<IEnumerable<Sending>>.Success(sendings);
         }
 

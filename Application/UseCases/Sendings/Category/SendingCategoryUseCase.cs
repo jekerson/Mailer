@@ -37,17 +37,14 @@ namespace Application.UseCases.Sendings.Category
             var sendingDtos = new List<SendingWithoutDetailsDto>();
             foreach (var sending in sendings)
             {
-                var scoreResult = await _sendingScoreRepository.GetSendingScoreBySendingIdAsync(sending.Id);
-                var subscribers = scoreResult.IsSuccess ? scoreResult.Value.CurrentSubscriber : 0;
-                var averageRating = scoreResult.IsSuccess ? scoreResult.Value.ReviewScore : 0;
 
                 sendingDtos.Add(new SendingWithoutDetailsDto(
                     sending.Id,
                     sending.Name,
                     sending.Company.Name,
                     sending.ImagePath,
-                    subscribers,
-                    averageRating
+                    sending.SendingScores.Count > 0 ? sending.SendingScores.First().CurrentSubscriber : 0,
+                    sending.SendingScores.Count > 0 ? sending.SendingScores.First().ReviewScore : 0
                 ));
             }
 

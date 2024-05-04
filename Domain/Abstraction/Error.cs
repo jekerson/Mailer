@@ -72,14 +72,14 @@
         public new static Result<T> Failure(Error error) => new(false, error);
     }
 
-    public class AuthenticationResult : Result<(string Token, string RefreshToken)>
+    public class AuthenticationResult : Result<(string AccessToken, string RefreshToken)>
     {
         protected AuthenticationResult(bool isSuccess, Error error, (string Token, string RefreshToken) value)
             : base(isSuccess, error, value)
         {
         }
 
-        public string Token => Value.Token;
+        public string Token => Value.AccessToken;
         public string RefreshToken => Value.RefreshToken;
 
         public static AuthenticationResult Success(string token, string refreshToken)
