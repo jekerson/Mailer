@@ -1,5 +1,7 @@
 using Application;
 using Infrastructure;
+using Serilog;
+using WebAPI.ExceptionHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,13 +23,19 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
 
 app.UseCors("DevCorsPolicy");
 
+app.UseExceptionHandler();
+
 app.UseRouting();
 app.MapControllers();
-
-app.MapGet("/", () => "Hello World!");
 
 app.Run();
