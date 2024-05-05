@@ -2,7 +2,6 @@
 using Application.UseCases.Companies.Profile;
 using Application.UseCases.Sendings.Category;
 using Application.UseCases.Sendings.Details;
-using Application.UseCases.Sendings.Sort;
 using Application.UseCases.SignIn;
 using Application.UseCases.SignUp;
 using Application.UseCases.Users.Profile;
@@ -41,7 +40,6 @@ namespace Application
             services.AddScoped<ISendingSubscriptionUseCase, SendingSubscriptionUseCase>();
             services.AddScoped<ISendingCategoryUseCase, SendingCategoryUseCase>();
             services.AddScoped<ISendingDetailsUseCase, SendingDetailsUseCase>();
-            services.AddScoped<ISendingSortingUseCase, SendingSortingUseCase>();
 
             services.AddAutoMapper(assembly);
 

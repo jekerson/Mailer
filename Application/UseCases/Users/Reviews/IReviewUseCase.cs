@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.Reviews;
 using Domain.Abstraction;
 
-namespace Application.UseCases.Users.ReviewManagment
+namespace Application.UseCases.Users.Reviews
 {
     public interface IReviewUseCase
     {

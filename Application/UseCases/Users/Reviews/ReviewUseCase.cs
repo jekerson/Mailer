@@ -5,7 +5,7 @@ using Domain.Entities;
 using Domain.Interfaces.Reviews;
 using Domain.Interfaces.Users;
 
-namespace Application.UseCases.Users.ReviewManagment
+namespace Application.UseCases.Users.Reviews
 {
     public class ReviewUseCase : IReviewUseCase
     {

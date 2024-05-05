@@ -1,5 +1,7 @@
-﻿using Application.DTOs.Sendings;
+﻿using Application.Abstraction.Pagging;
+using Application.DTOs.Sendings;
 using Domain.Abstraction;
+using Domain.Entities;
 using Domain.Interfaces.Sendings;
 
 namespace Application.UseCases.Sendings.Category
@@ -9,8 +11,6 @@ namespace Application.UseCases.Sendings.Category
         private readonly ISendingRepository _sendingRepository;
         private readonly ISendingCategoryRepository _sendingCategoryRepository;
         private readonly ISendingScoreRepository _sendingScoreRepository;
-
-
 
         public SendingCategoryUseCase(
             ISendingRepository sendingRepository,
@@ -22,7 +22,10 @@ namespace Application.UseCases.Sendings.Category
             _sendingScoreRepository = sendingScoreRepository;
         }
 
-        public async Task<Result<SendingByCategoryDto>> GetSendingsByCategoryAsync(int categoryId)
+        public async Task<Result<SendingByCategoryDto>> GetSendingsByCategoryAsync(
+            int categoryId,
+            int page, PageSizeType pageSize,
+            SortingType sortingType = SortingType.None)
         {
             var categoryResult = await _sendingCategoryRepository.GetSendingCategoryByIdAsync(categoryId);
             if (categoryResult.IsFailure)
@@ -34,10 +37,21 @@ namespace Application.UseCases.Sendings.Category
 
             var sendings = sendingsResult.Value.Where(s => !s.IsDeleted);
 
-            var sendingDtos = new List<SendingWithoutDetailsDto>();
-            foreach (var sending in sendings)
+            switch (sortingType)
             {
+                case SortingType.ByReview:
+                    sendings = sendings.OrderByDescending(s => s.SendingScores.FirstOrDefault()?.ReviewScore ?? 0);
+                    break;
+                case SortingType.BySubscriber:
+                    sendings = sendings.OrderByDescending(s => s.SendingScores.FirstOrDefault()?.CurrentSubscriber ?? 0);
+                    break;
+            }
 
+            var pagedSendings = PagedList<Sending>.ToPagedList(sendings.AsQueryable(), page, pageSize);
+
+            var sendingDtos = new List<SendingWithoutDetailsDto>();
+            foreach (var sending in pagedSendings)
+            {
                 sendingDtos.Add(new SendingWithoutDetailsDto(
                     sending.Id,
                     sending.Name,
@@ -51,20 +65,24 @@ namespace Application.UseCases.Sendings.Category
             var resultDto = new SendingByCategoryDto(
                 categoryId,
                 categoryResult.Value.Name,
-                sendingDtos
+                sendingDtos,
+                pagedSendings.TotalPages
             );
 
             return Result<SendingByCategoryDto>.Success(resultDto);
         }
 
-        public async Task<Result<IEnumerable<SendingByCategoryDto>>> GetFewSendingByCategoryAsync()
+
+        public async Task<Result<IEnumerable<SendingByCategoryDto>>> GetSomeSendingByCategoryAsync(int? CompanyId = null)
         {
             var categories = await _sendingCategoryRepository.GetAllSendingCategoriesAsync();
             if (categories.IsFailure)
             {
                 return Result<IEnumerable<SendingByCategoryDto>>.Failure(categories.Error);
             }
+
             var result = new List<SendingByCategoryDto>();
+
             foreach (var category in categories.Value)
             {
                 var sendings = await _sendingRepository.GetSendingsBySendingCategoryIdAsync(category.Id);
@@ -72,8 +90,21 @@ namespace Application.UseCases.Sendings.Category
                 {
                     return Result<IEnumerable<SendingByCategoryDto>>.Failure(sendings.Error);
                 }
+
+                IEnumerable<Sending> filteredSendings;
+
+                if (CompanyId.HasValue)
+                {
+                    filteredSendings = sendings.Value.Where(s => s.CompanyId == CompanyId.Value && !s.IsDeleted);
+                }
+                else
+                {
+                    filteredSendings = sendings.Value.Where(s => !s.IsDeleted);
+                }
+
                 var randomSendings = new List<SendingWithoutDetailsDto>();
-                foreach (var sending in sendings.Value.Where(s => !s.IsDeleted).OrderBy(_ => Guid.NewGuid()).Take(12))
+
+                foreach (var sending in filteredSendings.OrderBy(_ => Guid.NewGuid()).Take(CompanyId.HasValue ? 50 : 12))
                 {
                     var sendingScore = await _sendingScoreRepository.GetSendingScoreBySendingIdAsync(sending.Id);
                     var sendingDto = new SendingWithoutDetailsDto(
@@ -86,19 +117,31 @@ namespace Application.UseCases.Sendings.Category
                     );
                     randomSendings.Add(sendingDto);
                 }
-                var categoryDto = new SendingByCategoryDto(
-                    category.Id,
-                    category.Name,
-                    randomSendings
-                );
 
-                result.Add(categoryDto);
+                if (randomSendings.Any())
+                {
+                    var categoryDto = new SendingByCategoryDto(
+                        category.Id,
+                        category.Name,
+                        randomSendings,
+                        0
+                    );
 
-
+                    result.Add(categoryDto);
+                }
             }
-            return Result<IEnumerable<SendingByCategoryDto>>.Success(result);
 
+            return Result<IEnumerable<SendingByCategoryDto>>.Success(result);
         }
+
+
+    }
+
+    public enum SortingType
+    {
+        None,
+        ByReview,
+        BySubscriber
 
     }
 }

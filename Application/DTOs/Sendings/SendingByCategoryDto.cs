@@ -3,5 +3,6 @@
     public record SendingByCategoryDto(
         int CategoryId,
         string CategoryName,
-        IEnumerable<SendingWithoutDetailsDto> Sendings);
+        IEnumerable<SendingWithoutDetailsDto> Sendings,
+        int PageCount);
 }

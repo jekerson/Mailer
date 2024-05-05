@@ -1,4 +1,5 @@
-﻿using Application.UseCases.Sendings.Category;
+﻿using Application.Abstraction.Pagging;
+using Application.UseCases.Sendings.Category;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Extensions;
 
@@ -16,23 +17,29 @@ namespace WebAPI.Controllers
             _sendingCategoryUseCase = sendingCategoryUseCase;
         }
 
-        [HttpGet("{categoryId}")]
-        public async Task<IResult> GetSendingsByCategory(int categoryId)
+        [HttpGet()]
+        public async Task<IResult> GetSendingsByCategory(
+            [FromQuery] int categoryId,
+            [FromQuery] int page = 1,
+            [FromQuery] PageSizeType pageSize = PageSizeType.Medium,
+            [FromQuery] SortingType sortingType = SortingType.None)
         {
-            var result = await _sendingCategoryUseCase.GetSendingsByCategoryAsync(categoryId);
+            var result = await _sendingCategoryUseCase.GetSendingsByCategoryAsync(categoryId, page, pageSize, sortingType);
             return result.IsSuccess
                 ? Results.Ok(result.Value)
                 : result.ToProblemDetails();
         }
 
-        [HttpGet]
-        public async Task<IResult> GetFewSendingsByCategory()
+        [HttpGet("general")]
+        public async Task<IResult> GetSomeSendingByCategory(
+            [FromQuery] int? companyId = null)
         {
-            var result = await _sendingCategoryUseCase.GetFewSendingByCategoryAsync();
+            var result = await _sendingCategoryUseCase.GetSomeSendingByCategoryAsync(companyId);
             return result.IsSuccess
                 ? Results.Ok(result.Value)
                 : result.ToProblemDetails();
         }
+
 
 
     }
