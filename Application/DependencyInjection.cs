@@ -20,6 +20,7 @@ namespace Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             var assembly = typeof(DependencyInjection).Assembly;
+            services.AddAutoMapper(assembly);
 
             //Validators
             services.AddScoped<IGeneralInputValidator, GeneralInputValidator>();
@@ -40,8 +41,6 @@ namespace Application
             services.AddScoped<ISendingSubscriptionUseCase, SendingSubscriptionUseCase>();
             services.AddScoped<ISendingCategoryUseCase, SendingCategoryUseCase>();
             services.AddScoped<ISendingDetailsUseCase, SendingDetailsUseCase>();
-
-            services.AddAutoMapper(assembly);
 
             return services;
         }
