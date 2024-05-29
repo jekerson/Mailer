@@ -1,4 +1,5 @@
-﻿using Application.Services.RefreshToken;
+﻿using Application.Services.EmailSending;
+using Application.Services.RefreshToken;
 using Application.UseCases.Companies.Profile;
 using Application.UseCases.Sendings.Category;
 using Application.UseCases.Sendings.Details;
@@ -32,6 +33,7 @@ namespace Application
             // Services
 
             services.AddScoped<ITokenRefreshService, TokenRefreshService>();
+            services.AddScoped<IEmailPostSendingService, EmailPostSendingService>();
 
             // Use Cases
             services.AddScoped<ISignUpUseCase, SignUpUseCase>();

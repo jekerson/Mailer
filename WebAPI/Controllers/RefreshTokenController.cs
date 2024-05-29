@@ -1,4 +1,5 @@
 ﻿using Application.Services.RefreshToken;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Extensions;
 
@@ -6,6 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RefreshTokenController : ControllerBase
     {
         private readonly ITokenRefreshService _tokenRefreshService;

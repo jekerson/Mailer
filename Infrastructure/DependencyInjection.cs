@@ -6,7 +6,9 @@ using Domain.Interfaces.Roles;
 using Domain.Interfaces.Sendings;
 using Domain.Interfaces.Users;
 using Infrastructure.Authentication;
+using Infrastructure.BackgroundJobs;
 using Infrastructure.Data;
+using Infrastructure.Email;
 using Infrastructure.Repositories.Companies;
 using Infrastructure.Repositories.Files;
 using Infrastructure.Repositories.Reviews;
@@ -47,7 +49,9 @@ namespace Infrastructure
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IUserSendingRepository, UserSendingRepository>();
             services.AddScoped<IImageStorageRepository, ImageStorageRepository>();
-            services.AddScoped<IJwtProvider, JwtProvider>();
+            services.AddHttpClient();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddHostedService<SendingBackgroundService>();
 
             return services;
         }
